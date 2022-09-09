@@ -4,6 +4,7 @@ from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 from uvicorn import run as run_app
 
+from network.model.training_model import Train_Model
 from network.validation_insertion.train_validation_insertion import \
     Train_Validation
 from utils.read_params import read_params
@@ -38,6 +39,10 @@ async def trainRouteClient():
         train_val = Train_Validation()
 
         train_val.train_validation()
+        
+        train_model = Train_Model()
+        
+        train_model.training_model()
 
         return Response("Training successfull!!")
 
