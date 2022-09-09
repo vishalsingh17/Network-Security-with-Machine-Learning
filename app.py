@@ -4,9 +4,9 @@ from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 from uvicorn import run as run_app
 
+from network.validation_insertion.train_validation_insertion import \
+    Train_Validation
 from utils.read_params import read_params
-
-from network.validation_insertion.train_validation_insertion import Train_Validation
 
 app = FastAPI()
 
