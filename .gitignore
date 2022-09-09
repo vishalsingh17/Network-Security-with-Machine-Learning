@@ -8,6 +8,10 @@ __pycache__/
 
 demotest.py
 
+data
+
+network_logs
+
 # Distribution / packaging
 .Python
 build/

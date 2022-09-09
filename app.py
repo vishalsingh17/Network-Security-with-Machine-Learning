@@ -6,6 +6,8 @@ from uvicorn import run as run_app
 
 from utils.read_params import read_params
 
+from network.validation_insertion.train_validation_insertion import Train_Validation
+
 app = FastAPI()
 
 config = read_params()
@@ -28,6 +30,17 @@ async def index(request: Request):
     return templates.TemplateResponse(
         config["templates"]["index_html_file"], {"request": request}
     )
+@app.get("/train")
+async def trainRouteClient():
+    try:
+        train_val = Train_Validation()
+
+        train_val.train_validation()
+
+        return Response("Training successfull!!")
+
+    except Exception as e:
+        return Response(f"Error Occurred! {e}")
 
 
 if __name__ == "__main__":
