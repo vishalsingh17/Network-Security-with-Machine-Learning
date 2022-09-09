@@ -169,7 +169,7 @@ class Raw_Train_Data_Validation:
 
                 bad_data_train_fname = self.bad_train_data_dir + "/" + filename
 
-                self.log_writer.log("Created raw,good and bad data file name", *log_dic)
+                self.log_writer.log("Created raw,good and bad data file name", **log_dic)
 
                 if match(regex, filename):
                     splitAtDot = split(".csv", filename)
