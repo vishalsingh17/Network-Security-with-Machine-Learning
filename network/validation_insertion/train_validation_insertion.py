@@ -1,3 +1,4 @@
+from network.data_transform.data_transformation_train import Data_Transform_Train
 from network.raw_data_validation.train_data_validation import Raw_Train_Data_Validation
 from utils.logger import App_Logger
 from utils.read_params import get_log_dic, read_params
@@ -18,9 +19,11 @@ class Train_Validation:
         self.log_writer = App_Logger()
 
         self.train_main_log = self.config["log"]["train_main"]
-        
+
         self.raw_data = Raw_Train_Data_Validation()
-        
+
+        self.data_transform = Data_Transform_Train()
+
     def train_validation(self):
         """
         Method Name :   training_validation
@@ -62,6 +65,12 @@ class Train_Validation:
             self.raw_data.validate_missing_values_in_col()
 
             self.log_writer.log("Train Raw Data Validation completed", **log_dic)
+
+            self.log_writer.log("Train Data Transformation started", **log_dic)
+
+            self.data_transform.add_quotes_to_string_values_in_column()
+
+            self.log_writer.log("Train Data Transformation completed", **log_dic)
 
             self.log_writer.start_log("exit", **log_dic)
 
