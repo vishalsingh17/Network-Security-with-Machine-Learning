@@ -30,6 +30,8 @@ async def index(request: Request):
     return templates.TemplateResponse(
         config["templates"]["index_html_file"], {"request": request}
     )
+
+
 @app.get("/train")
 async def trainRouteClient():
     try:
