@@ -1,0 +1,99 @@
+base:
+  random_state: 36
+  test_size: 0.33
+
+target_col: Result
+
+app:
+  host: 0.0.0.0
+  port: 8080
+
+data:
+  raw_data:
+    train_batch: data_given/train_batch
+    pred_batch: data_given/pred_batch
+
+  train:
+    good_data_dir: data/good/train
+    bad_data_dir: data/bad/train
+
+  pred:
+    good_data_dir: data/good/pred
+    bad_data_dir: data/bad/pred
+
+knn_imputer:
+  n_neighbors: 3
+  weights: uniform
+
+model_dir:
+  trained: trained_models
+  stag: staging_models
+  prod: production_models
+
+dir:
+  log: network_logs
+  artifacts: network_artifacts
+
+model_utils:
+  verbose: 3
+  cv: 5
+  n_jobs: -1
+
+save_format: .sav
+
+train_model:
+
+mongodb:
+  network_db_name: network-data
+  network_train_data_collection: network-train-data
+  network_pred_data_collection: network-pred-data
+
+log:
+  model_training: model_training.log
+  train_col_validation: train_col_validation.log
+  train_data_transform: train_data_transform.log
+  train_export_csv: train_export_csv.log
+  train_general: train_general.log
+  train_db_insert: train_db_insert.log
+  load_prod_model: load_prod_model.log
+  train_missing_values_in_col: train_missing_values.log
+  train_name_validation: train_name_validation.log
+  train_main: train_main.log
+  train_values_from_schema: train_values_from_schema.log
+  pred_col_validation: pred_col_validation.log
+  pred_data_transform: pred_data_transform.log
+  pred_db_insert: pred_db_insert.log
+  pred_export_csv: pred_export_csv.log
+  pred_general: pred_general.log
+  pred_missing_values_in_col: pred_missing_values.log
+  pred_name_validation: pred_name_validation.log
+  pred_main: pred_main.log
+  pred_values_from_schema: pred_values_from_schema.log
+
+schema_file:
+  train_schema_file: config/network_schema_training.json 
+  pred_schema_file: config/network_schema_prediction.json
+
+null_values_csv_file: network_artifacts/null_values.csv
+
+pred_output_file: network_artifacts/predictions.csv
+
+regex_file: config/network_regex.txt
+
+train_input_dir: data/train_input
+
+pred_input_dir: data/pred_input
+
+export_csv_file:
+  train: train_input_file.csv
+  pred: pred_input_file.csv
+
+templates:
+  dir: templates
+  index_html_file: index.html
+
+log_params:
+  filemode: a
+  format: "%(asctime)s;%(levelname)s;%(file_name)s;%(class_name)s;%(method_name)s;%(message)s"
+  datefmt: "%H:%M:%S"
+  level: INFO
