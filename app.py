@@ -1,3 +1,5 @@
+from json import loads
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
@@ -5,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from uvicorn import run as run_app
 
 from network.model.load_production_model import Load_Prod_Model
+from network.model.predict_from_model import Prediction
 from network.model.training_model import Train_Model
 from network.validation_insertion.prediction_validation_insertion import Pred_Validation
 from network.validation_insertion.train_validation_insertion import Train_Validation
@@ -62,7 +65,13 @@ async def predictRouteClient():
 
         pred_val.pred_validation()
 
-        return Response("Prediction successfull !!")
+        pred = Prediction()
+
+        path, json_predictions = pred.predict_from_model()
+
+        return Response(
+            f"Prediction successfull !! Prediction file created at {path} and few of the predictions are {str(loads(json_predictions))}"
+        )
 
     except Exception as e:
         return Response(f"Error Occurred! {e}")
