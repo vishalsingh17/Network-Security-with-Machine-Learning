@@ -1,5 +1,3 @@
-from json import load
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
@@ -8,7 +6,10 @@ from uvicorn import run as run_app
 
 from network.model.load_production_model import Load_Prod_Model
 from network.model.training_model import Train_Model
-from network.validation_insertion.train_validation_insertion import Train_Validation
+from network.validation_insertion.prediction_validation_insertion import \
+    Pred_Validation
+from network.validation_insertion.train_validation_insertion import \
+    Train_Validation
 from utils.read_params import read_params
 
 app = FastAPI()
@@ -51,6 +52,19 @@ async def trainRouteClient():
         load_prod_model.load_production_model(trained_model_list)
 
         return Response("Training successfull!!")
+
+    except Exception as e:
+        return Response(f"Error Occurred! {e}")
+
+
+@app.get("/predict")
+async def predictRouteClient():
+    try:
+        pred_val = Pred_Validation()
+
+        pred_val.pred_validation()
+
+        return Response("Prediction successfull !!")
 
     except Exception as e:
         return Response(f"Error Occurred! {e}")
