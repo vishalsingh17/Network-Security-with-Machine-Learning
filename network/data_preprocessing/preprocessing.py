@@ -243,9 +243,12 @@ class Preprocessor:
             )
 
             new_data = label_encoder.fit_transform(data)
-            
-            self.log_writer.log(f"Applied {label_encoder.__class__.__name__} to the dataframe",**log_dic)
-        
+
+            self.log_writer.log(
+                f"Applied {label_encoder.__class__.__name__} to the dataframe",
+                **log_dic,
+            )
+
             self.log_writer.log("Encoded the target cols in the dataframe", **log_dic)
 
             self.log_writer.start_log("exit", **log_dic)

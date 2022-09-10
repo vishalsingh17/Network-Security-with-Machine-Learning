@@ -55,9 +55,9 @@ class Train_Model:
                 data = self.preprocessor.impute_missing_values(data)
 
             X, Y = self.preprocessor.separate_label_feature(data, self.target_col)
-            
+
             Y = self.preprocessor.encode_target_cols(Y)
-            
+
             lst = self.tuner.train_and_save_models(X, Y)
 
             self.log_writer.log("Finished model training", **log_dic)
