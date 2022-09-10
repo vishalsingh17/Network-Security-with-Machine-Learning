@@ -1,5 +1,5 @@
-from network.raw_data_validation.pred_data_validation import \
-    Raw_Pred_Data_Validation
+from network.data_transform.data_transformation_pred import Data_Transform_Pred
+from network.raw_data_validation.pred_data_validation import Raw_Pred_Data_Validation
 from utils.logger import App_Logger
 from utils.read_params import get_log_dic, read_params
 
@@ -27,6 +27,8 @@ class Pred_Validation:
         ]
 
         self.raw_data = Raw_Pred_Data_Validation()
+
+        self.data_transform = Data_Transform_Pred()
 
     def pred_validation(self):
         """
@@ -69,6 +71,12 @@ class Pred_Validation:
             self.raw_data.validate_missing_values_in_col()
 
             self.log_writer.log("Pred Raw Data Validation completed", **log_dic)
+
+            self.log_writer.log("Starting Data Transformation", **log_dic)
+
+            self.data_transform.add_quotes_to_string_values_in_column()
+
+            self.log_writer.log("Data Transformation completed !!", **log_dic)
 
             self.log_writer.start_log("exit", **log_dic)
 
