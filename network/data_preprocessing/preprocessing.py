@@ -1,6 +1,7 @@
 import numpy as np
 from pandas import DataFrame
 from sklearn.impute import KNNImputer
+from sklearn.preprocessing import LabelEncoder
 
 from utils.logger import App_Logger
 from utils.read_params import get_log_dic, read_params
@@ -206,6 +207,50 @@ class Preprocessor:
             self.log_writer.start_log("exit", **log_dic)
 
             return self.new_data
+
+        except Exception as e:
+            self.log_writer.exception_log(e, **log_dic)
+
+    def encode_target_cols(self, data):
+        """
+        Method Name :   impute_missing_values
+        Description :   TThis method encodes all the target values in the training set.
+        
+        Output      :   A dataframe which has target values encoded.
+        On Failure  :   Write an exception log and then raise an exception
+        
+        Version     :   1.2
+        Revisions   :   moved setup to cloud
+        """
+        log_dic = get_log_dic(
+            self.__class__.__name__,
+            self.encode_target_cols.__name__,
+            __file__,
+            self.log_file,
+        )
+
+        self.log_writer.start_log("start", **log_dic)
+
+        try:
+            self.log_writer.log(
+                "Started encoding target columns in the dataframe", **log_dic
+            )
+
+            label_encoder = LabelEncoder()
+
+            self.log_writer.log(
+                f"Initialized {label_encoder.__class__.__name__}", **log_dic
+            )
+
+            new_data = label_encoder.fit_transform(data)
+            
+            self.log_writer.log(f"Applied {label_encoder.__class__.__name__} to the dataframe",**log_dic)
+        
+            self.log_writer.log("Encoded the target cols in the dataframe", **log_dic)
+
+            self.log_writer.start_log("exit", **log_dic)
+
+            return new_data
 
         except Exception as e:
             self.log_writer.exception_log(e, **log_dic)
