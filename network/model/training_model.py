@@ -1,4 +1,5 @@
 from network.data_ingestion.data_loader_train import Data_Getter_Train
+from network.data_preprocessing.preprocessing import Preprocessor
 from utils.logger import App_Logger
 from utils.read_params import get_log_dic, read_params
 
@@ -14,6 +15,8 @@ class Train_Model:
         self.log_writer = App_Logger()
 
         self.data_getter_train = Data_Getter_Train(self.model_train_log)
+
+        self.preprocessor = Preprocessor(self.model_train_log)
 
     def training_model(self):
         """
@@ -40,6 +43,17 @@ class Train_Model:
             self.log_writer.log("Started model training", **log_dic)
 
             data = self.data_getter_train.get_data()
+
+            data = self.preprocessor.replace_invalid_values_with_null(data)
+
+            is_null_present = self.preprocessor.is_null_present(data)
+
+            if is_null_present:
+                data = self.preprocessor.impute_missing_values(data)
+
+            X, Y = self.preprocessor.separate_label_feature(data, self.target_col)
+
+            print(Y.unique())
 
             self.log_writer.log("Finished model training", **log_dic)
 
