@@ -12,6 +12,8 @@ data
 
 network_logs
 
+network_artifacts
+
 # Distribution / packaging
 .Python
 build/
