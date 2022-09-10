@@ -1,5 +1,7 @@
 from network.data_transform.data_transformation_pred import Data_Transform_Pred
-from network.raw_data_validation.pred_data_validation import Raw_Pred_Data_Validation
+from network.data_type_valid.data_type_valid_pred import DB_Operation_Pred
+from network.raw_data_validation.pred_data_validation import \
+    Raw_Pred_Data_Validation
 from utils.logger import App_Logger
 from utils.read_params import get_log_dic, read_params
 
@@ -29,6 +31,8 @@ class Pred_Validation:
         self.raw_data = Raw_Pred_Data_Validation()
 
         self.data_transform = Data_Transform_Pred()
+        
+        self.db_operation = DB_Operation_Pred()
 
     def pred_validation(self):
         """
@@ -77,6 +81,18 @@ class Pred_Validation:
             self.data_transform.add_quotes_to_string_values_in_column()
 
             self.log_writer.log("Data Transformation completed !!", **log_dic)
+
+            self.log_writer.log("Train Data Type Validation started", **log_dic)
+
+            self.db_operation.insert_good_data_as_record(
+                self.good_data_db_name, self.good_data_collection_name
+            )
+
+            self.db_operation.export_collection_to_csv(
+                self.good_data_db_name, self.good_data_collection_name
+            )
+
+            self.log_writer.log("Train Data Type Validation completed", **log_dic)
 
             self.log_writer.start_log("exit", **log_dic)
 
