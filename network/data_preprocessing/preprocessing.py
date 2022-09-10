@@ -9,7 +9,7 @@ from utils.read_params import get_log_dic, read_params
 class Preprocessor:
     def __init__(self, log_file):
         self.log_file = log_file
-        
+
         self.config = read_params()
 
         self.null_values_file = self.config["null_values_csv_file"]
@@ -77,9 +77,7 @@ class Preprocessor:
 
             self.Y = data[label_col_name]
 
-            self.log_writer.log(
-                f"Separated {label_col_name} from {data}", **log_dic
-            )
+            self.log_writer.log(f"Separated {label_col_name} from {data}", **log_dic)
 
             self.log_writer.start_log("exit", **log_dic)
 
