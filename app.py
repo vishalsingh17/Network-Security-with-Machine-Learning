@@ -1,9 +1,12 @@
+from json import load
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 from uvicorn import run as run_app
 
+from network.model.load_production_model import Load_Prod_Model
 from network.model.training_model import Train_Model
 from network.validation_insertion.train_validation_insertion import \
     Train_Validation
@@ -42,7 +45,11 @@ async def trainRouteClient():
 
         train_model = Train_Model()
 
-        train_model.training_model()
+        trained_model_list = train_model.training_model()
+        
+        load_prod_model = Load_Prod_Model()
+        
+        load_prod_model.load_production_model(trained_model_list)
 
         return Response("Training successfull!!")
 
