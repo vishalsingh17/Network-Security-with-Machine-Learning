@@ -42,6 +42,64 @@ model_utils:
 save_format: .sav
 
 train_model:
+  RandomForestClassifier:
+    n_estimators:
+      - 10
+      - 50
+      - 100
+      - 130
+      
+    criterion:
+      - gini
+      - entropy
+
+    max_features:
+      - auto
+      - log2
+
+    max_depth:
+      - 2
+      - 3
+      - 4
+      - 5
+
+  XGBClassifier:
+    learning_rate:
+      - 0.5
+      - 0.1
+      - 0.01
+      - 0.001
+
+    max_depth:
+      - 3
+      - 5
+      - 10
+      - 20
+
+    n_estimators:
+      - 10
+      - 50
+      - 100
+      - 200
+      
+  AdaBoostClassifier:
+    n_estimators:
+      - 10
+      - 50
+      - 100
+      - 130
+
+    learning_rate:
+      - 0.5
+      - 0.1
+      - 0.01
+      - 0.001
+
+    random_state:
+      - 0
+      - 100
+      - 200
+      - 300
 
 mongodb:
   network_db_name: network-data
